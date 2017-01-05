@@ -1,5 +1,11 @@
 class Solution {
 public:
+
+/*
+ * DP solution
+ * Time O(n^2)
+ * Space O(n^2)
+ */
     string longestPalindrome(string s) {
         int n = s.length();
         int dp[n][n];
@@ -44,5 +50,43 @@ public:
             cout<<endl;
         }*/
         return s.substr(start, maxLen);
+    }
+
+/*
+ * space optimized solution
+ * Time O(n^2)
+ * Space O(1)
+ */
+    string palindrome_substr(string s, int l, int h) {
+        if(l < 0 || h >= s.length())
+            return "";
+        while(l>=0 && h<s.length() && s[l]==s[h]) {
+            l--;
+            h++;
+        }
+        l++; h--;
+        if(l <= h)
+            return s.substr(l, h-l+1);
+        else
+            return "";
+    }
+    string longestPalindrome(string s) {
+        string maxPalin = "", palin = "";
+        int maxLen=0;
+        for(int i=0; i<s.length(); i++){
+            palin = palindrome_substr(s, i, i);
+            if(maxLen < palin.length()){
+                maxPalin = palin;
+                maxLen = maxPalin.length();
+            }
+            if(i < s.length()-1){
+                palin = palindrome_substr(s, i, i+1);
+                if(maxLen < palin.length()){
+                    maxPalin = palin;
+                    maxLen = maxPalin.length();
+                }
+            }
+        }
+        return maxPalin;
     }
 };

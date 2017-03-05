@@ -1,3 +1,37 @@
+//recursive solution
+ass Solution {
+public:
+    bool isMatchUtil(string s, string p, int si, int pi) {
+        //cout << si << " " << s[si] <<" "<< pi << " " << p[pi] << endl;
+        //cout << (p.size() == pi) << endl;
+        if((s.size() == 0 && p.size() == 0) || (s.size() == si && p.size() == pi))
+            return true;
+        if(p.size() == 0 || p.size() == pi)
+            return false;
+        
+        if(pi < p.size()-1 && p[pi+1] == '*') {
+            if(isMatchUtil(s, p, si, pi+2)) //0 occurrence of p[pi] term
+                return true;
+            int i = si;
+            while(i<s.size() && (s[i] == p[pi] || p[pi] == '.')) {
+                if(isMatchUtil(s, p, i+1, pi+2))
+                    return true;
+                i++;
+            }
+            return false;
+        }
+        else {
+            if(s[si] != p[pi] && p[pi] != '.')
+                return false;
+            return isMatchUtil(s, p, si+1, pi+1);
+        }
+    }
+    bool isMatch(string s, string p) {
+        return isMatchUtil(s, p, 0, 0);
+    }
+};
+
+//DP solution
 class Solution {
 public:
     bool isMatch(string s, string p) {

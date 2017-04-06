@@ -12,16 +12,19 @@ public:
             dict.insert(wordDict[i]);
         }
         
-        vector<bool> dp(s.length(), false);
-        for(int i=0; i<s.length(); i++) {
-            for(int j=0; j<=i; j++) {
-                //cout << (j > 0 && dp[j-1]) << " " << (dict.find(s.substr(j, i-j+1)) != dict.end()) << " " << s.substr(j, i-j+1) << " ";
-                dp[i] = (j > 0 ? dp[j-1] : true) && (dict.find(s.substr(j, i-j+1)) != dict.end());
-                if(dp[i] == true)
-                    break;
+        vector<bool> dp(s.length() + 1, false);
+        dp[0] = true;
+        for(int i=1; i<=s.length(); i++) {
+            for(int j=0; j<i; j++) {
+                
+                if(dp[j]) {
+                    dp[i] =  (dict.find(s.substr(j, i-j)) != dict.end());
+                    
+                    if(dp[i])
+                        break;
+                }
             }
-            //cout << i << " " << dp[i] << endl;
         }
-        return dp[s.length()-1];
+        return dp[s.length()];
     }
 };

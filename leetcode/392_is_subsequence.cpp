@@ -17,6 +17,8 @@ Return false.
 
 Follow up:
 If there are lots of incoming S, say S1, S2, ... , Sk where k >= 1B, and you want to check one by one to see if T has its subsequence. In this scenario, how would you change your code?
+Possible Soln. - Using Binary search. Preprocess T storing the occurrences of every character in a array of array of size 26 or 256. The binary search in this array for every incoming S.
+O(n) to preprocess and O(m log?) for searching.
 */
 
 class Solution {
